@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Sistem Apotek Navbar Responsive Bootstrap Montserrat</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body,
+    .navbar-brand-text-top,
+    .navbar-brand-text-bottom,
+    .nav-link-custom {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .navbar-custom {
+      background: linear-gradient(to bottom, #2E5ADD, #C6D2F6);
+      box-shadow: 0 4px 6px rgba(90, 109, 187, 0.25);
+    }
+
+    .navbar-brand-text-top {
+      color: #357A5B;
+      font-weight: 600;
+      font-size: 0.875rem; /* text-sm */
+      line-height: 1.25rem;
+      margin: 0;
+    }
+
+    .navbar-brand-text-bottom {
+      color: #1B3CA2;
+      font-weight: 800;
+      font-size: 0.875rem; /* text-sm */
+      line-height: 1.25rem;
+      margin: 0;
+    }
+
+    .nav-link-custom {
+      color: #1B3CA2 !important;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .nav-link-custom:hover,
+    .nav-link-custom:focus {
+      text-decoration: underline !important;
+      color: #1B3CA2 !important;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .navbar-brand img {
+      width: 48px;
+      height: 48px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-custom px-3 py-3">
+    <a class="navbar-brand" href="#">
+      <img
+        src="../assets/logo.png"
+        alt="Round logo with green and yellow elements representing RS Muhammadiyah Surabaya"
+        width="48"
+        height="48"
+      />
+      <div class="d-flex flex-column leading-tight">
+        <p class="navbar-brand-text-top mb-0">Sistem Apotek</p>
+        <p class="navbar-brand-text-bottom mb-0">RS Muhammadiyah Surabaya</p>
+      </div>
+    </a>
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon">
+        <i class="fas fa-bars fa-lg" style="color:#1a2e6a;"></i>
+      </span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav gap-4">
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="#">Manajemen Obat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="#">Order</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-custom" href="#">Laporan</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
