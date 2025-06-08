@@ -1,0 +1,241 @@
+* {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            min-height: auto;
+        }
+
+        .main-container {
+            background: white;
+            min-height: calc(100vh - 40px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .back-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+
+        }
+
+        .back-btn:hover {
+            background: #5a4fcf;
+            transform: translateY(-2px);
+        }
+
+        .checkout-container {
+            padding: 20px;
+        }
+
+        .checkout-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .medicine-code {
+            font-size: 12px;
+            color: #6c757d;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .medicine-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #6c5ce7;
+            background: white;
+            color: #6c5ce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .qty-btn:hover {
+            background: #6c5ce7;
+            color: white;
+            transform: scale(1.1);
+        }
+        .qty-btn-minus {
+    border-color: #dc3545; /* Warna merah border */
+    color: #dc3545; /* Warna merah teks/ikon */
+}
+
+.qty-btn-minus:hover {
+    background: #dc3545; /* Warna merah background saat hover */
+    color: white; /* Warna teks putih saat hover */
+    /* Transform translateY(-2px) sudah ada di .qty-btn, jadi tidak perlu diulang */
+}
+
+        .qty-display {
+            font-size: 16px;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+            color: #2d3748;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            background: #f8f9fa;
+        }
+
+        .notes-input:focus {
+            border-color: #6c5ce7;
+            background: white;
+        }
+
+        .checkout-options {
+            margin: 20px 0;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .form-check {
+            margin-bottom: 8px;
+        }
+
+        .form-check-input:checked {
+            background-color: #6c5ce7;
+            border-color: #6c5ce7;
+        }
+
+        .form-check-label {
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #1B3CA2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #1B3CA2;
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: #6c5ce7;
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            resize: vertical;
+        }
+
+        .notes-textarea:focus {
+            border-color: #6c5ce7;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1B3CA2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .main-container {
+                border-radius: 10px;
+            }
+
+            .checkout-item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .quantity-controls {
+                align-self: flex-end;
+            }
+        }

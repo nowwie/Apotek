@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Apotek RS Muhammadiyah Surabaya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .user-welcome {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            border-radius: 25px;
+            border: 2px solid #E2E8F0;
+            padding: 12px 50px 12px 20px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .search-input:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4A5568;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #E2E8F0;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            border-color: #4A90E2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .order-card.completed {
+            opacity: 0.7;
+            border-color: #48BB78;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-progress {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ED8936;
+            border: 2px solid #ED8936;
+        }
+
+        .status-completed {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48BB78;
+            border: 2px solid #48BB78;
+        }
+
+        .btn-custom {
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            border: 2px solid;
+            margin: 0 5px;
+        }
+
+        .btn-detail {
+            background: transparent;
+            color: #4A90E2;
+            border-color: #4A90E2;
+        }
+
+        .btn-detail:hover {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .btn-complete {
+            background: #48BB78;
+            color: white;
+            border-color: #48BB78;
+        }
+
+        .btn-complete:hover {
+            background: #38A169;
+            border-color: #38A169;
+        }
+
+        .btn-completed {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48BB78;
+            border-color: #48BB78;
+            cursor: default;
+        }
+
+        .btn-new-order {
+            background: #6B73FF;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .btn-new-order:hover {
+            background: #5A64E6;
+            color: white;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .stats-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #4A90E2 0%, #6B73FF 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem 2rem;
+        }
+
+        .btn-close {
+            filter: invert(1) brightness(100);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .order-id {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2C5282;
+        }
+
+        .customer-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4A5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .medicine-list {
+            font-size: 0.9rem;
+            color: #4A5568;
+            line-height: 1.5;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 3rem;
+            color: #4A5568;
+        }
+
+        .no-orders i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .order-card {
+                padding: 1rem;
+            }
+            
+            .btn-custom {
+                font-size: 10px;
+                padding: 6px 12px;
+                margin: 2px;
+            }
+            
+            .stats-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header Section -->
+            <div class="header-section">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-pills fa-2x"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-0 fw-bold">Sistem Apotek</h4>
+                                <p class="mb-0 opacity-75">RS Muhammadiyah Surabaya</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <nav class="d-none d-md-block">
+                            <a href="#" class="text-white me-3 text-decoration-none opacity-75">Dashboard</a>
+                            <a href="#" class="text-white me-3 text-decoration-none opacity-75">Manajemen Obat</a>
+                            <a href="#" class="text-white me-3 text-decoration-none opacity-75">Order</a>
+                            <a href="#" class="text-white text-decoration-none opacity-75">Laporan</a>
+                        </nav>
+                    </div>
+                </div>
+                
+                <div class="user-welcome">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-user-circle fa-2x me-3"></i>
+                                <div>
+                                    <h5 class="mb-0 fw-bold">Halo! <span id="username">Fransiska</span> 👋</h5>
+                                    <p class="mb-0 opacity-75">Selamat Datang Kembali</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-outline-light btn-sm" onclick="showLogoutModal()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Log Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="p-4">
+                <div class="row">
+                    <!-- Left Column - Orders -->
+                    <div class="col-md-8">
+                        <!-- Header with Search and New Order -->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-6">
+                                <h3 class="fw-bold text-primary mb-3">Antrian Transaksi</h3>
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" class="search-input" placeholder="Cari Antrean">
+                                    <i class="fas fa-search search-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-new-order" onclick="addNewOrder()">
+                                    <i class="fas fa-plus me-2"></i>Pesanan Baru
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Orders List -->
+                        <div id="ordersList" class="row">
+                            <!-- Orders will be populated here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Stats -->
+                    <div class="col-md-4">
+                        <div class="stats-card mb-4">
+                            <div class="stats-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stats-number" id="queueCount">6</div>
+                            <div class="stats-label">Antrian</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stats-number" id="todayTotal">18</div>
+                            <div class="stats-label">Total Pelanggan Hari Ini</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Keluar dari Sistem Apotek?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="mb-3">
+                        <i class="fas fa-sign-out-alt fa-3x text-warning"></i>
+                    </div>
+                    <h6 class="mb-3">Apakah Anda yakin ingin keluar?</h6>
+                    <p class="text-muted">Anda akan keluar dari sistem dan perlu login kembali.</p>
+                </div>
+                <div class="modal-footer justify-content-center border-0 pb-4">
+                    <button type="button" class="btn btn-outline-secondary btn-custom" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger btn-custom" onclick="logout()">Keluar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Order Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Detail Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="detailContent">
+                    <!-- Detail content will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let orders = [
+            {
+                id: 312,
+                customer: "Pak Pawat",
+                medicines: "CTM 4 mg, Alprazolam 0.5 mg",
+                status: "in-progress",
+                timestamp: new Date()
+            },
+            {
+                id: 313,
+                customer: "Bu Mikasa",
+                medicines: "Sanmol 500 mg, Obat Combi",
+                status: "in-progress",
+                timestamp: new Date()
+            },
+            {
+                id: 314,
+                customer: "Bu Sumiyati",
+                medicines: "Paracetamol 500 mg, Ibuprofen 200 mg",
+                status: "in-progress",
+                timestamp: new Date()
+            },
+            {
+                id: 315,
+                customer: "Pak Earth",
+                medicines: "Decolgen, Lansoprazole 10 mg",
+                status: "in-progress",
+                timestamp: new Date()
+            },
+            {
+                id: 316,
+                customer: "Pak Polisi",
+                medicines: "Simvastatin 10 mg, Metformin 500 mg",
+                status: "in-progress",
+                timestamp: new Date()
+            },
+            {
+                id: 317,
+                customer: "Bu Pur",
+                medicines: "Allopurinol 100 mg",
+                status: "in-progress",
+                timestamp: new Date()
+            }
+        ];
+
+        let totalCustomersToday = 18;
+
+        function renderOrders() {
+            const ordersList = document.getElementById('ordersList');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredOrders = orders.filter(order => 
+                order.customer.toLowerCase().includes(searchTerm) ||
+                order.id.toString().includes(searchTerm) ||
+                order.medicines.toLowerCase().includes(searchTerm)
+            );
+
+            const inProgressOrders = filteredOrders.filter(order => order.status === 'in-progress');
+            const completedOrders = filteredOrders.filter(order => order.status === 'completed');
+            const sortedOrders = [...inProgressOrders, ...completedOrders];
+
+            if (sortedOrders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="col-12">
+                        <div class="no-orders">
+                            <i class="fas fa-search"></i>
+                            <h5>Tidak ada pesanan ditemukan</h5>
+                            <p>Coba ubah kata kunci pencarian Anda</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            ordersList.innerHTML = sortedOrders.map(order => `
+                <div class="col-md-6">
+                    <div class="order-card ${order.status === 'completed' ? 'completed' : ''}" data-order-id="${order.id}">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-id">Ord_id ${order.id}</div>
+                                <div class="customer-name">${order.customer}</div>
+                            </div>
+                            <div>
+                                <span class="status-badge ${order.status === 'completed' ? 'status-completed' : 'status-progress'}">
+                                    ${order.status === 'completed' ? 'Selesai' : 'In-Progress'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="medicine-list mb-3">${order.medicines}</div>
+                        <div class="text-end">
+                            <button class="btn btn-detail btn-custom" onclick="showDetail(${order.id})">Detail Pesanan</button>
+                            ${order.status === 'completed' 
+                                ? '<button class="btn btn-completed btn-custom" disabled>Pesanan Selesai</button>'
+                                : '<button class="btn btn-complete btn-custom" onclick="markComplete(' + order.id + ')">Tandai Selesai</button>'
+                            }
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const queueCount = orders.filter(order => order.status === 'in-progress').length;
+            document.getElementById('queueCount').textContent = queueCount;
+            document.getElementById('todayTotal').textContent = totalCustomersToday;
+        }
+
+        function markComplete(orderId) {
+            const orderIndex = orders.findIndex(order => order.id === orderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = 'completed';
+                orders[orderIndex].completedAt = new Date();
+                renderOrders();
+            }
+        }
+
+        function showDetail(orderId) {
+            const order = orders.find(order => order.id === orderId);
+            if (!order) return;
+
+            const detailContent = document.getElementById('detailContent');
+            detailContent.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-primary mb-3">Informasi Pesanan</h6>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-semibold">ID Pesanan:</td>
+                                <td>Ord_id ${order.id}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Nama Pelanggan:</td>
+                                <td>${order.customer}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Status:</td>
+                                <td>
+                                    <span class="status-badge ${order.status === 'completed' ? 'status-completed' : 'status-progress'}">
+                                        ${order.status === 'completed' ? 'Selesai' : 'In-Progress'}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Waktu Pesanan:</td>
+                                <td>${order.timestamp.toLocaleString('id-ID')}</td>
+                            </tr>
+                            ${order.completedAt ? `
+                            <tr>
+                                <td class="fw-semibold">Waktu Selesai:</td>
+                                <td>${order.completedAt.toLocaleString('id-ID')}</td>
+                            </tr>
+                            ` : ''}
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-primary mb-3">Daftar Obat</h6>
+                        <div class="bg-light p-3 rounded">
+                            ${order.medicines.split(', ').map(medicine => `
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-pills text-primary me-2"></i>
+                                    <span>${medicine}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${order.status === 'in-progress' ? `
+                        <div class="mt-3">
+                            <button class="btn btn-complete btn-custom w-100" onclick="markComplete(${order.id}); bootstrap.Modal.getInstance(document.getElementById('detailModal')).hide();">
+                                <i class="fas fa-check me-2"></i>Tandai Selesai
+                            </button>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+
+            const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+            modal.show();
+        }
+
+        function addNewOrder() {
+            window.location.href = '#pilih-obat';
+        }
+
+        function showLogoutModal() {
+            const modal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            modal.show();
+        }
+
+        function logout() {
+            alert('Logout berhasil!');
+        }
+
+        document.getElementById('searchInput').addEventListener('input', renderOrders);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderOrders();
+        });
+    </script>
+</body>
+</html>

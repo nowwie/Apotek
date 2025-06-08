@@ -1,0 +1,78 @@
+ body {
+   font-family: 'Montserrat', sans-serif;
+   background-color: #f6f7fb;
+ }
+
+ input.form-control,
+ select.form-select {
+   width: 100%;
+ }
+
+ .stok-box {
+   flex: 1;
+   padding: 1rem;
+   border-radius: 10px;
+   color: white;
+   font-weight: 600;
+   cursor: pointer;
+   text-align: center;
+ }
+
+ .stok-rendah-box {
+   background-color: #ffedb5;
+   color: #b07b00;
+   border: 1px solid #ffc107;
+ }
+
+ .stok-habis-box {
+   background-color: #f8bcbc;
+   color: #9c0000;
+   border: 1px solid #dc3545;
+ }
+
+ .obat-card {
+   border: 1px solid #ddd;
+   border-radius: 12px;
+   background-color: #fff;
+   padding: 1rem;
+   margin-bottom: 1rem;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+ }
+
+ .obat-status {
+   font-weight: bold;
+   padding: 0.2rem 0.6rem;
+   border-radius: 8px;
+   font-size: 0.8rem;
+ }
+
+ .status-aman {
+   background-color: #c9f7f5;
+   color: #0bb7af;
+ }
+
+ .status-rendah {
+   background-color: #fff4de;
+   color: #ffc700;
+ }
+
+ .status-habis {
+   background-color: #ffe2e5;
+   color: #f1416c;
+ }
+
+ .icon-btn {
+   background: none;
+   border: none;
+   cursor: pointer;
+   margin-left: 0.25rem;
+   color: #6c757d;
+ }
+
+ .icon-btn:hover {
+   color: #000;
+ }
+
+ .pagination {
+   justify-content: center;
+ }

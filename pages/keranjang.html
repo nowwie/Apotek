@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - Sistem Apotek</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/keranjang.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="main-container">
+        <div class="header-section">
+            <a href="pilihobat.html" class="btn btn-outline-primary back-button">
+                <i class="fas fa-arrow-left me-2"></i>Kembali
+            </a>
+        </div>
+
+        <div class="checkout-container">
+            <div id="checkoutItems">
+                <!-- Sample checkout items -->
+                <div class="checkout-item">
+                    <div class="checkout-item-header">
+                        <div>
+                            <div class="medicine-code">Kode: H217</div>
+                            <div class="medicine-name">CTM 5mg</div>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn qty-btn-minus" onclick="decreaseQuantity(0)">-</button>
+                            <span class="qty-display" id="qty-0">1</span>
+                            <button class="qty-btn" onclick="increaseQuantity(0)">+</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catatan:</label>
+                        <input type="text" class="notes-input" placeholder="2 x sehari" onclick="showItemNotesModal(0)"
+                            readonly>
+                    </div>
+                </div>
+
+                <div class="checkout-item">
+                    <div class="checkout-item-header">
+                        <div>
+                            <div class="medicine-code">Kode: OK008</div>
+                            <div class="medicine-name">Alprazolam 0.5 mg</div>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="decreaseQuantity(1)">-</button>
+                            <span class="qty-display" id="qty-1">2</span>
+                            <button class="qty-btn" onclick="increaseQuantity(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catatan:</label>
+                        <input type="text" class="notes-input" placeholder="1 x sehari" onclick="showItemNotesModal(1)"
+                            readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-options">
+                <div class="option-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="nonRacikan">
+                        <label class="form-check-label" for="nonRacikan">
+                            <span class="option-title">Bukan Racikan</span><br>
+                            <small class="text-muted">Rp. 0</small>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="option-title">Obat Racikan</div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="racikan" id="ringan">
+                        <label class="form-check-label" for="ringan">
+                            Ringan (Rp. 10.000)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="racikan" id="sedang">
+                        <label class="form-check-label" for="sedang">
+                            Sedang (Rp. 15.000)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="racikan" id="berat">
+                        <label class="form-check-label" for="berat">
+                            Berat (Rp. 25.000)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label option-title">Catatan tambahan</label>
+                <input type="text" class="notes-input" placeholder="Tinggalkan pesan" onclick="showNotesModal()"
+                    readonly>
+            </div>
+
+            <button class="submit-btn" onclick="submitOrder()">Submit Pesanan</button>
+        </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div class="modal fade" id="notesModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pesan untuk Pasien</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <textarea class="notes-textarea" id="notesTextarea" placeholder="Tinggalkan pesan"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="confirm-btn" onclick="saveNotes()">Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../js/layout.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample cart data - in real implementation, this would come from localStorage or passed from pilihobat.html
+        let cart = [
+            {
+                code: 'H217',
+                name: 'CTM 5mg',
+                quantity: 1,
+                notes: '2 x sehari'
+            },
+            {
+                code: 'OK008',
+                name: 'Alprazolam 0.5 mg',
+                quantity: 2,
+                notes: '1 x sehari'
+            }
+        ];
+
+        let patientNotes = '';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCheckoutItems();
+        });
+
+
+        // Render checkout items dynamically
+        function renderCheckoutItems() {
+            const container = document.getElementById('checkoutItems');
+            container.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const checkoutItem = document.createElement('div');
+                checkoutItem.className = 'checkout-item';
+                checkoutItem.innerHTML = `
+                    <div class="checkout-item-header">
+                        <div>
+                            <div class="medicine-code">Kode: ${item.code}</div>
+                            <div class="medicine-name">${item.name}</div>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn qty-btn-minus" onclick="decreaseQuantity(${index})">-</button>
+                            <span class="qty-display" id="qty-${index}">${item.quantity}</span>
+                            <button class="qty-btn" onclick="increaseQuantity(${index})">+</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catatan:</label>
+                        <input type="text" class="notes-input" placeholder="${item.notes || item.quantity + ' x sehari'}" onclick="showItemNotesModal(${index})" readonly>
+                    </div>
+                `;
+                container.appendChild(checkoutItem);
+            });
+        }
+
+        // Increase quantity
+        function increaseQuantity(index) {
+            cart[index].quantity++;
+            document.getElementById(`qty-${index}`).textContent = cart[index].quantity;
+        }
+
+        // Decrease quantity
+        function decreaseQuantity(index) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+                document.getElementById(`qty-${index}`).textContent = cart[index].quantity;
+            }
+        }
+
+        // Show notes modal for general notes
+        function showNotesModal() {
+            const modal = new bootstrap.Modal(document.getElementById('notesModal'));
+            document.getElementById('notesTextarea').value = patientNotes;
+            document.getElementById('notesTextarea').removeAttribute('data-item-index');
+            modal.show();
+        }
+
+        // Show item notes modal
+        function showItemNotesModal(index) {
+            const modal = new bootstrap.Modal(document.getElementById('notesModal'));
+            document.getElementById('notesTextarea').value = cart[index].notes || `${cart[index].quantity} x sehari`;
+            document.getElementById('notesTextarea').setAttribute('data-item-index', index);
+            modal.show();
+        }
+
+        // Save notes
+        function saveNotes() {
+            const textarea = document.getElementById('notesTextarea');
+            const itemIndex = textarea.getAttribute('data-item-index');
+
+            if (itemIndex !== null) {
+                // Save item-specific notes
+                cart[itemIndex].notes = textarea.value;
+                // Update the placeholder in the input field
+                renderCheckoutItems();
+            } else {
+                // Save general patient notes
+                patientNotes = textarea.value;
+            }
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('notesModal'));
+            modal.hide();
+        }
+
+        // Submit order
+        function submitOrder() {
+            const orderData = {
+                items: cart,
+                patientNotes: patientNotes,
+                nonRacikan: document.getElementById('nonRacikan').checked,
+                racikanType: document.querySelector('input[name="racikan"]:checked')?.id || null
+            };
+
+            console.log('Order submitted:', orderData);
+            alert('Pesanan berhasil dikirim!');
+            window.location.href = 'checkout.html';
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manajemen Obat</title>
+  <link rel="stylesheet" href="../css/manajemenObat.css" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- Font Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+
+</head>
+
+<body>
+  <!-- Header akan dimuat di sini -->
+  <div id="header"></div>
+
+  <main class="container my-5">
+    <h4 class="mb-4 fw-semibold">Stok Obat</h4>
+
+    <!-- Kotak Stok Rendah & Habis -->
+    <div class="d-flex gap-3 mb-4">
+      <div class="stok-box stok-rendah-box" data-bs-toggle="modal" data-bs-target="#popupRendah">
+        Rendah <span class="badge bg-warning text-dark">3</span>
+      </div>
+      <div class="stok-box stok-habis-box" data-bs-toggle="modal" data-bs-target="#popupHabis">
+        Habis <span class="badge bg-danger">2</span>
+      </div>
+    </div>
+
+    <!-- Header Manajemen Obat -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-semibold mb-0">Manajemen Obat</h5>
+      <button class="btn btn-primary">+ Obat Baru</button>
+    </div>
+
+    <!-- Search dan Filter -->
+    <div class="container mb-3">
+      <div class="d-flex flex-column gap-2">
+        <input type="text" class="form-control" placeholder="Cari Obat" />
+        <div class="d-flex gap-2">
+          <select class="form-select w-100">
+            <option>Semua Stok</option>
+            <option>Aman</option>
+            <option>Rendah</option>
+            <option>Habis</option>
+          </select>
+          <select class="form-select w-100">
+            <option>Semua Golongan</option>
+            <option>Bebas</option>
+            <option>Keras</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Container Card Obat -->
+    <div class="row" id="obatContainer"></div>
+
+    <!-- Modal Stok Habis -->
+    <div class="modal fade" id="popupHabis" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-danger bg-opacity-25 border-danger">
+          <div class="modal-header">
+            <h5 class="modal-title text-danger fw-bold">Habis <span class="badge bg-danger">2</span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body bg-white rounded">
+            <p><strong>Kode: K321</strong><br />Simvastatin 10 mg</p>
+            <hr />
+            <p><strong>Kode: K322</strong><br />Ambroxol 30 mg</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Stok Rendah -->
+    <div class="modal fade" id="popupRendah" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-warning bg-opacity-25 border-warning">
+          <div class="modal-header">
+            <h5 class="modal-title text-warning fw-bold">Rendah <span class="badge bg-warning text-dark">3</span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body bg-white rounded">
+            <p><strong>Kode: H215</strong><br />Amoxicillin 500 mg</p>
+            <hr />
+            <p><strong>Kode: H217</strong><br />CTM 4 mg</p>
+            <hr />
+            <p><strong>Kode: HJ092</strong><br />Decolgen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav>
+      <ul class="pagination mt-4">
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- Footer akan dimuat di sini -->
+  <div id="footer"></div>
+
+  <!-- Load Components Script -->
+  <script src="../js/layout.js"></script>
+
+  <!-- Data dan Render Card -->
+  <script>
+    const obatData = [
+      { kode: "OK003", nama: "Diazepam 2 mg", golongan: "Keras", expired: "13-10-2028", harga: 15000, stok: 65 },
+      { kode: "K321", nama: "Simvastatin 10 mg", golongan: "Keras", expired: "15-06-2028", harga: 13500, stok: 0 },
+      { kode: "H215", nama: "Amoxicillin 500 mg", golongan: "Bebas", expired: "13-05-2028", harga: 12500, stok: 30 },
+      { kode: "H217", nama: "CTM 4 mg", golongan: "Bebas", expired: "13-05-2028", harga: 12500, stok: 30 },
+      { kode: "K322", nama: "Ambroxol 30 mg", golongan: "Bebas", expired: "13-05-2028", harga: 13000, stok: 0 }
+    ];
+
+    function getStatusClass(stok) {
+      if (stok === 0) return 'status-habis';
+      else if (stok <= 30) return 'status-rendah';
+      else return 'status-aman';
+    }
+
+    function getStatusText(stok) {
+      if (stok === 0) return 'Habis';
+      else if (stok <= 30) return 'Rendah';
+      else return 'Aman';
+    }
+
+    function renderObatCard(obat) {
+      return `
+        <div class="col-md-4 col-lg-3">
+          <div class="obat-card">
+            <p class="mb-1"><strong>Kode:</strong> ${obat.kode}</p>
+            <p class="mb-1"><strong>${obat.nama}</strong></p>
+            <p class="mb-1">Golongan: ${obat.golongan}</p>
+            <p class="mb-1">Expired: ${obat.expired}</p>
+            <p class="mb-1">Harga: Rp${obat.harga.toLocaleString()}</p>
+            <p class="mb-2">Stok: ${obat.stok}</p>
+            <span class="obat-status ${getStatusClass(obat.stok)}">${getStatusText(obat.stok)}</span>
+            <div class="mt-3 d-flex justify-content-end">
+              <button class="icon-btn" title="Detail"><i class="bi bi-eye"></i></button>
+              <button class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></button>
+              <button class="icon-btn" title="Hapus"><i class="bi bi-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderObatList() {
+      const container = document.getElementById('obatContainer');
+      container.innerHTML = '';
+      obatData.forEach(obat => {
+        container.innerHTML += renderObatCard(obat);
+      });
+    }
+
+    // Render obat list when DOM is ready
+    document.addEventListener('DOMContentLoaded', renderObatList);
+  </script>
+
+  <!-- Bootstrap JS (penting untuk modal) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

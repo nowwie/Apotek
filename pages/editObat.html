@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Obat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f7f7f7;
+      padding: 2rem;
+    }
+    .form-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+
+    h5 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; /* Extra bold */
+      color: #1B3CA2;   /* Warna biru sesuai permintaan */
+    }
+
+
+    .form-label {
+      font-weight: 800;
+    }
+    .form-control:focus {
+      border-color: #3b5bdb;
+      box-shadow: 0 0 0 0.1rem rgba(59,91,219,0.25);
+    }
+    .btn-primary {
+      background-color: #1e40af;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #1e3a8a;
+    }
+    .back-button {
+      background-color: #C6D2F6;
+      margin-bottom: 1rem;
+    }
+    #submitBtn:disabled {
+    background-color: #7B96E9;
+    color: white;
+    cursor: not-allowed;
+    }
+
+    #submitBtn:not(:disabled):hover {
+      background-color: #112666;
+    }
+
+    #submitBtn:not(:disabled) {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    .input-group-text {
+      background: transparent;
+      border: none;
+    }
+    .icon-container {
+      border: 1px solid #cbd5e0;
+      border-radius: 0.375rem;
+    }
+    .custom-hr {
+      border: none;
+      height: 2px;
+      background-color: #1D43B4;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="#" class="btn btn-outline-primary back-button"><i class="bi bi-arrow-left"></i> Kembali</a>
+    <div class="form-container">
+      <h5 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Obat</h5>
+      <hr class="custom-hr"> <!--  pengen warna biru -->
+
+      <form id = "editForm">
+        <div class="mb-3">
+          <label class="form-label">Kode Obat</label>
+          <div class="input-group icon-container">
+            <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
+            <input name="kodeObat" type="text" class="form-control" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nama Obat</label>
+          <div class="input-group icon-container">
+            <span class="input-group-text"><i class="bi bi-capsule"></i></span>
+            <input name="namaObat" type="text" class="form-control"  />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Golongan</label>
+          <select name="golongan" class="form-select">
+            <option value="" selected disabled>Pilih Golongan</option>
+            <option value="Keras">Keras</option>
+            <option value="Bebas">Bebas</option>
+            <option value="Terbatas">Terbatas</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Expired</label>
+          <div class="input-group icon-container">
+            <input name="expired" type="date" class="form-control"/>
+            
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Harga</label>
+          <div class="input-group icon-container">
+            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+            <input name="harga" type="text" class="form-control" />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Stok</label>
+          <div class="input-group icon-container">
+            <span class="input-group-text"><i class="bi bi-archive"></i></span>
+            <input name="stok" type="number" class="form-control" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" id="submitBtn" disabled>Simpan Perubahan</button>
+
+      </form>
+    </div>
+  </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("editForm");
+      const submitBtn = document.getElementById("submitBtn");
+
+      // Simpan nilai awal
+      const initialValues = {};
+      Array.from(form.elements).forEach(el => {
+        if (el.tagName === "INPUT" || el.tagName === "SELECT") {
+          initialValues[el.name] = el.value;
+        }
+      });
+
+      // Cek perubahan setiap input
+      form.addEventListener("input", () => {
+        let isChanged = false;
+        Array.from(form.elements).forEach(el => {
+          if ((el.tagName === "INPUT" || el.tagName === "SELECT") && el.name) {
+            if (el.value !== initialValues[el.name]) {
+              isChanged = true;
+            }
+          }
+        });
+
+        submitBtn.disabled = !isChanged;
+      });
+    });
+  </script>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

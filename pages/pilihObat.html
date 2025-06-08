@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Obat - RS Muhammadiyah Surabaya</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/pilihObat.css">
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="main-container">
+        <div class="header-section">
+            <div class="top-bar">
+            <button class="btn btn-outline-primary back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left me-2"></i>Kembali
+            </button>
+            <!-- Cart Summary -->
+            <a href="keranjang.html" class="cart-summary" id="cartSummary" ">
+            <i class=" fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="totalItems">0</span>
+            </a>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari Obat" id="searchInput">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+
+        <div class="medicine-grid" id="medicineGrid">
+            <!-- Medicine cards will be populated by JavaScript -->
+        </div>
+
+        <div class="pagination-container">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Medicine data
+        const medicines = [
+            {
+                code: 'OK008',
+                name: 'Alprazolam 0.5 mg',
+                category: 'Keras',
+                expired: '04-05-2027',
+                price: 20000,
+                stock: 183,
+                quantity: 0
+            },
+            {
+                code: 'H217',
+                name: 'CTM 4 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12000,
+                stock: 30,
+                quantity: 0
+            },
+            {
+                code: 'H211',
+                name: 'Paracetamol 10 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12500,
+                stock: 188,
+                quantity: 0
+            },
+            {
+                code: 'H212',
+                name: 'Paracetamol 10 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12500,
+                stock: 188,
+                quantity: 0
+            },
+            {
+                code: 'H213',
+                name: 'Paracetamol 10 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12500,
+                stock: 188,
+                quantity: 0
+            },
+            {
+                code: 'H214',
+                name: 'Paracetamol 10 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12500,
+                stock: 188,
+                quantity: 0
+            },
+            {
+                code: 'H215',
+                name: 'Paracetamol 10 mg',
+                category: 'Bebas',
+                expired: '13-05-2028',
+                price: 12500,
+                stock: 188,
+                quantity: 0
+            }
+        ];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            loadCartFromStorage();
+            renderMedicines();
+            updateCartSummary();
+        });
+
+        // Load cart data from localStorage
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('medicineCart');
+            if (savedCart) {
+                const cartData = JSON.parse(savedCart);
+                cartData.forEach(cartItem => {
+                    const medicineIndex = medicines.findIndex(m => m.code === cartItem.code && m.name === cartItem.name);
+                    if (medicineIndex !== -1) {
+                        medicines[medicineIndex].quantity = cartItem.quantity;
+                    }
+                });
+            }
+        }
+
+        // Save cart data to localStorage
+        function saveCartToStorage() {
+            const cart = medicines.filter(medicine => medicine.quantity > 0);
+            localStorage.setItem('medicineCart', JSON.stringify(cart));
+        }
+
+        // Render medicine cards
+        function renderMedicines() {
+            const grid = document.getElementById('medicineGrid');
+            grid.innerHTML = '';
+
+            medicines.forEach((medicine, index) => {
+                const stockClass = medicine.stock > 100 ? 'stock-safe' : medicine.stock > 50 ? 'stock-warning' : 'stock-danger';
+                const stockText = medicine.stock > 100 ? 'Aman' : medicine.stock > 50 ? 'Rendah' : 'Habis';
+
+                const card = document.createElement('div');
+                card.className = 'medicine-card';
+                card.innerHTML = `
+                    <div class="medicine-code">Kode: ${medicine.code}</div>
+                    <div class="medicine-name">${medicine.name}</div>
+                    <div class="medicine-details">
+                        Golongan: ${medicine.category}<br>
+                        Expired: ${medicine.expired}<br>
+                        Harga: ${medicine.price.toLocaleString()}<br>
+                        Stok: ${medicine.stock}
+                    </div>
+                    <div class="stock-badge ${stockClass}">${stockText}</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="decreaseQuantity(${index})">-</button>
+                        <span class="qty-display" id="qty-${index}">${medicine.quantity}</span>
+                        <button class="qty-btn" onclick="increaseQuantity(${index})">+</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Increase quantity
+        function increaseQuantity(index) {
+            if (medicines[index].quantity < medicines[index].stock) {
+                medicines[index].quantity++;
+                document.getElementById(`qty-${index}`).textContent = medicines[index].quantity;
+                updateCartSummary();
+                saveCartToStorage();
+            }
+        }
+
+        // Decrease quantity
+        function decreaseQuantity(index) {
+            if (medicines[index].quantity > 0) {
+                medicines[index].quantity--;
+                document.getElementById(`qty-${index}`).textContent = medicines[index].quantity;
+                updateCartSummary();
+                saveCartToStorage();
+            }
+        }
+
+        // Update cart summary
+        function updateCartSummary() {
+            const totalItems = medicines.reduce((sum, medicine) => sum + medicine.quantity, 0);
+            document.getElementById('totalItems').textContent = totalItems;
+
+            // Show/hide cart summary
+            const cartSummary = document.getElementById('cartSummary');
+            if (totalItems > 0) {
+                cartSummary.style.display = 'block';
+            } else {
+                cartSummary.style.display = 'block';
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredMedicines = medicines.filter(medicine =>
+                medicine.name.toLowerCase().includes(searchTerm) ||
+                medicine.code.toLowerCase().includes(searchTerm)
+            );
+
+            // Re-render with filtered results
+            const grid = document.getElementById('medicineGrid');
+            grid.innerHTML = '';
+
+            filteredMedicines.forEach((medicine, index) => {
+                const originalIndex = medicines.indexOf(medicine);
+                const stockClass = medicine.stock > 100 ? 'stock-safe' : medicine.stock > 50 ? 'stock-warning' : 'stock-danger';
+                const stockText = medicine.stock > 100 ? 'Aman' : medicine.stock > 50 ? 'Rendah' : 'Habis';
+
+                const card = document.createElement('div');
+                card.className = 'medicine-card';
+                card.innerHTML = `
+                    <div class="medicine-code">Kode: ${medicine.code}</div>
+                    <div class="medicine-name">${medicine.name}</div>
+                    <div class="medicine-details">
+                        Golongan: ${medicine.category}<br>
+                        Expired: ${medicine.expired}<br>
+                        Harga: ${medicine.price.toLocaleString()}<br>
+                        Stok: ${medicine.stock}
+                    </div>
+                    <div class="stock-badge ${stockClass}">${stockText}</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="decreaseQuantity(${originalIndex})">-</button>
+                        <span class="qty-display" id="qty-${originalIndex}">${medicine.quantity}</span>
+                        <button class="qty-btn" onclick="increaseQuantity(${originalIndex})">+</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+    </script>
+    <div id="footer"></div>
+    <script src="../js/layout.js"></script>
+</body>
+
+</html>

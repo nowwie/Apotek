@@ -1,0 +1,247 @@
+ * {
+     font-family: 'Montserrat', sans-serif;
+ }
+
+ body {
+     height: auto;
+     background: linear-gradient(white);
+     min-height: auto;
+     overflow-y: auto;
+ }
+
+ .main-container {
+     background: white;
+     min-height: auto;
+     margin-top: 20px;
+     margin-bottom: 20px;
+     margin: 20px;
+     border-radius: 15px;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+ }
+
+ #header {
+     margin-bottom: 30px;
+ }
+
+ .footer {
+     margin-top: 20px;
+ }
+
+ .back-btn {
+     background: #6c5ce7;
+     color: white;
+     border: none;
+     padding: 8px 20px;
+     border-radius: 20px;
+     font-size: 14px;
+     transition: all 0.3s ease;
+    
+ }
+
+
+ .back-btn:hover {
+     background: #5a4fcf;
+     transform: translateY(-2px);
+ }
+
+.form-container{
+    margin-top: 30px;
+}
+
+ .search-container {
+     position: relative;
+     margin: 20px 0;
+ }
+
+ .search-input {
+     width: 100%;
+     padding: 12px 50px 12px 20px;
+     border: 2px solid #e9ecef;
+     border-radius: 10px;
+     font-size: 16px;
+     outline: none;
+     transition: all 0.3s ease;
+ }
+
+ .search-input:focus {
+     border-color: #6c5ce7;
+     box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.25);
+ }
+
+ .search-icon {
+     position: absolute;
+     right: 20px;
+     top: 50%;
+     transform: translateY(-50%);
+     color: #6c757d;
+ }
+
+ .medicine-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+     gap: 20px;
+     padding: 20px;
+ }
+
+ .medicine-card {
+     background: white;
+     border: 2px solid #e9ecef;
+     border-radius: 12px;
+     padding: 20px;
+     transition: all 0.3s ease;
+     position: relative;
+ }
+
+ .medicine-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+     border-color: #6c5ce7;
+ }
+
+ .medicine-code {
+     font-size: 12px;
+     color: #6c757d;
+     margin-bottom: 5px;
+     font-weight: 500;
+ }
+
+ .medicine-name {
+     font-size: 16px;
+     font-weight: 600;
+     color: #2d3748;
+     margin-bottom: 10px;
+ }
+
+ .medicine-details {
+     font-size: 12px;
+     color: #6c757d;
+     margin-bottom: 15px;
+     line-height: 1.4;
+ }
+
+ .stock-badge {
+     display: inline-block;
+     padding: 4px 12px;
+     border-radius: 15px;
+     font-size: 11px;
+     font-weight: 500;
+     margin-bottom: 15px;
+ }
+
+ .stock-safe {
+     background: #d4edda;
+     color: #155724;
+ }
+
+ .stock-warning {
+     background: #fff3cd;
+     color: #856404;
+ }
+
+ .stock-danger {
+     background: #f8d7da;
+     color: #721c24;
+ }
+
+ .quantity-controls {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     justify-content: center;
+ }
+
+ .qty-btn {
+     width: 35px;
+     height: 35px;
+     border: 2px solid #6c5ce7;
+     background: white;
+     color: #6c5ce7;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     font-size: 18px;
+     font-weight: bold;
+ }
+
+ .qty-btn:hover {
+     background: #6c5ce7;
+     color: white;
+     transform: scale(1.1);
+ }
+
+ .qty-display {
+     font-size: 16px;
+     font-weight: 600;
+     min-width: 30px;
+     text-align: center;
+     color: #2d3748;
+ }
+
+ .cart-summary {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     background: #6c5ce7;
+     color: white;
+     padding: 15px 25px;
+     border-radius: 25px;
+     box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3);
+     cursor: pointer;
+     transition: all 0.3s ease;
+     z-index: 1000;
+     text-decoration: none;
+ }
+
+ .cart-summary:hover {
+     transform: translateY(-3px);
+     box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
+     color: white;
+ }
+
+ .pagination-container {
+     display: flex;
+     justify-content: center;
+     padding: 30px 20px;
+ }
+
+ .pagination .page-link {
+     border: none;
+     padding: 10px 15px;
+     margin: 0 3px;
+     border-radius: 8px;
+     color: #6c757d;
+     background: #f8f9fa;
+     transition: all 0.3s ease;
+ }
+
+ .pagination .page-item.active .page-link {
+     background: #6c5ce7;
+     color: white;
+ }
+
+ .pagination .page-link:hover {
+     background: #6c5ce7;
+     color: white;
+     transform: translateY(-2px);
+ }
+
+ @media (max-width: 768px) {
+     .medicine-grid {
+         grid-template-columns: 1fr;
+         padding: 15px;
+     }
+
+     .main-container {
+         margin: 10px;
+         border-radius: 10px;
+     }
+
+     .cart-summary {
+         bottom: 10px;
+         right: 10px;
+         padding: 12px 20px;
+     }
+ }

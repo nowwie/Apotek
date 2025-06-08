@@ -1,0 +1,48 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-divider {
+border: none;
+  height: 3px; 
+  background-image: #7B96E9;
+}
+  
+.back-btn {
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+
+}
+
+
+.back-btn:hover {
+    background: #5a4fcf;
+    transform: translateY(-2px);
+}
+
+.upload-box {
+    background-color: #fafafa;
+    border: 2px dashed #d0d0d0;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.upload-box.dragover {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.icon-upload {
+    font-size: 40px;
+}
+
+#fileStatus {
+    font-size: 0.9rem;
+}

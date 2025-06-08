@@ -1,0 +1,29 @@
+body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .card-custom {
+      border-radius: 10px;
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+    }
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .btn-primary {
+      background-color: #173B94;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 30px;
+      width: 100%;
+    }
+    .btn-primary:hover {
+      background-color: #102a6d;
+    }
+    .price {
+      font-weight: 600;
+    }
+    .border-bottom-dashed {
+      border-bottom: 1px dashed #ccc;
+    }
