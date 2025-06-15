@@ -12,6 +12,7 @@
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <!-- Font Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -24,42 +25,103 @@
   <div id="header"></div>
 
   <main class="container my-5">
-    <h4 class="mb-4 fw-semibold">Stok Obat</h4>
-
-    <!-- Kotak Stok Rendah & Habis -->
-    <div class="d-flex gap-3 mb-4">
-      <div class="stok-box stok-rendah-box" data-bs-toggle="modal" data-bs-target="#popupRendah">
-        Rendah <span class="badge bg-warning text-dark">3</span>
-      </div>
-      <div class="stok-box stok-habis-box" data-bs-toggle="modal" data-bs-target="#popupHabis">
-        Habis <span class="badge bg-danger">2</span>
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <p class="fs-5">Apakah Anda yakin ingin menghapus obat ini?</p>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
+              <button type="button" class="btn btn-primary" id="btnConfirmDelete">Hapus</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
+    <h4 class="mb-4 fw-semibold" style="color: #1B3CA2;">Stok Obat</h4>
+
+    <!-- Kotak Stok Rendah & Habis -->
+    <div class="d-flex gap-3 mb-4 justify-content-start">
+      <div class="stok-box stok-rendah-box d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+        data-bs-target="#popupRendah">
+        <div>
+          <div class="status-title">Rendah</div>
+          <div class="status-count">3</div>
+        </div>
+        <i class="bi bi-exclamation-triangle-fill status-icon-rendah"></i>
+      </div>
+
+      <div class="stok-box stok-habis-box d-flex align-items-center justify-content-between" data-bs-toggle="modal"
+        data-bs-target="#popupHabis">
+        <div>
+          <div class="status-title">Habis</div>
+          <div class="status-count">2</div>
+        </div>
+        <i class="bi bi-x-octagon-fill status-icon-habis"></i>
+      </div>
+    </div>
+
+
     <!-- Header Manajemen Obat -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="fw-semibold mb-0">Manajemen Obat</h5>
-      <button class="btn btn-primary">+ Obat Baru</button>
+      <h5 class="fw-semibold mb-0" style="color: #1B3CA2;">Manajemen Obat</h5>
+      <button onclick="window.location.href='../pages/tambahObat.html'" class="btn btn-primary">+ Obat Baru</button>
     </div>
 
     <!-- Search dan Filter -->
     <div class="container mb-3">
       <div class="d-flex flex-column gap-2">
-        <input type="text" class="form-control" placeholder="Cari Obat" />
-        <div class="d-flex gap-2">
-          <select class="form-select w-100">
-            <option>Semua Stok</option>
-            <option>Aman</option>
-            <option>Rendah</option>
-            <option>Habis</option>
-          </select>
-          <select class="form-select w-100">
-            <option>Semua Golongan</option>
-            <option>Bebas</option>
-            <option>Keras</option>
-          </select>
+        <div class="input-group">
+          <input type="text" class="form-control" id="searchInput" placeholder="Cari Obat" />
+          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
         </div>
+
+
+        <!-- Filter Buttons -->
+        <div class="d-flex align-items-center gap-2 mt-3">
+          <label class="fw-semibold me-2">Filters</label>
+
+          <button class="btn btn-outline-primary btn-sm active" id="filterSemua">Semua</button>
+
+          <!-- Stok Dropdown -->
+          <div class="dropdown">
+            <button id="stokDropdownBtn" class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+              data-bs-toggle="dropdown">
+              Stok
+            </button>
+
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item stok-option" data-value="Aman" href="#">Aman</a></li>
+              <li><a class="dropdown-item stok-option" data-value="Habis" href="#">Habis</a></li>
+              <li><a class="dropdown-item stok-option" data-value="Rendah" href="#">Rendah</a></li>
+
+            </ul>
+          </div>
+
+          <!-- Golongan Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              Golongan
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item golongan-option" data-value="Bebas" href="#">Obat Bebas</a></li>
+              <li><a class="dropdown-item golongan-option" data-value="Keras" href="#">Obat Keras</a></li>
+              <li><a class="dropdown-item golongan-option" data-value="Terbatas" href="#">Obat Terbatas</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Daftar Obat -->
+        <div id="daftarObat" class="mt-4">
+          <!-- akan diisi JS -->
+        </div>
+
       </div>
+
+    </div>
     </div>
 
 
@@ -126,6 +188,8 @@
       { kode: "K321", nama: "Simvastatin 10 mg", golongan: "Keras", expired: "15-06-2028", harga: 13500, stok: 0 },
       { kode: "H215", nama: "Amoxicillin 500 mg", golongan: "Bebas", expired: "13-05-2028", harga: 12500, stok: 30 },
       { kode: "H217", nama: "CTM 4 mg", golongan: "Bebas", expired: "13-05-2028", harga: 12500, stok: 30 },
+      { kode: "HJ092", nama: "Decolgen", golongan: "Terbatas", expired: "19-02-2028", harga: 4.500, stok: 30 },
+      { kode: "OK004", nama: "Metformin 500 mg", golongan: "Keras", expired: "13-05-2028", harga: 12500, stok: 101 },
       { kode: "K322", nama: "Ambroxol 30 mg", golongan: "Bebas", expired: "13-05-2028", harga: 13000, stok: 0 }
     ];
 
@@ -143,23 +207,41 @@
 
     function renderObatCard(obat) {
       return `
-        <div class="col-md-4 col-lg-3">
-          <div class="obat-card">
-            <p class="mb-1"><strong>Kode:</strong> ${obat.kode}</p>
-            <p class="mb-1"><strong>${obat.nama}</strong></p>
-            <p class="mb-1">Golongan: ${obat.golongan}</p>
-            <p class="mb-1">Expired: ${obat.expired}</p>
-            <p class="mb-1">Harga: Rp${obat.harga.toLocaleString()}</p>
-            <p class="mb-2">Stok: ${obat.stok}</p>
-            <span class="obat-status ${getStatusClass(obat.stok)}">${getStatusText(obat.stok)}</span>
-            <div class="mt-3 d-flex justify-content-end">
-              <button class="icon-btn" title="Detail"><i class="bi bi-eye"></i></button>
-              <button class="icon-btn" title="Edit"><i class="bi bi-pencil"></i></button>
-              <button class="icon-btn" title="Hapus"><i class="bi bi-trash"></i></button>
-            </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="obat-card">
+          <p class="mb-1"><strong>Kode: ${obat.kode}</strong></p>
+          <p class="mb-1" style="color: #1B3CA2;"><strong>${obat.nama}</strong></p>
+          <p class="mb-1">Golongan: ${obat.golongan}</p>
+          <p class="mb-1">Expired: ${obat.expired}</p>
+          <p class="mb-1">Harga: Rp${obat.harga.toLocaleString()}</p>
+          <p class="mb-1">Stok: ${obat.stok}</p>
+          <span class="obat-status ${getStatusClass(obat.stok)}">${getStatusText(obat.stok)}</span>
+          <div class="mt-3 d-flex justify-content-end">
+            <button class="icon-btn btn-edit" data-kode="${obat.kode}" title="Edit">
+              <i class="bi bi-pencil"></i>
+            </button>
+
+            <button class="icon-btn btn-delete" data-kode="${obat.kode}" title="Hapus">
+              <i class="bi bi-trash"></i>
+            </button>
           </div>
         </div>
-      `;
+      </div>
+    `;
+    }
+
+
+    function setupEditButtons() {
+      document.querySelectorAll(".btn-edit").forEach(button => {
+        button.addEventListener("click", function () {
+          const kode = this.dataset.kode;
+          // Simpan data ke localStorage
+          const obat = obatData.find(o => o.kode === kode);
+          localStorage.setItem("editObat", JSON.stringify(obat));
+          // Arahkan ke halaman edit
+          window.location.href = "editObat.html";
+        });
+      });
     }
 
     function renderObatList() {
@@ -170,8 +252,117 @@
       });
     }
 
+    let selectedStok = "Semua";
+    let selectedGolongan = "Semua";
+    let keyword = "";
+
+
+    function applyFilters() {
+      const container = document.getElementById('obatContainer');
+      container.innerHTML = '';
+
+      const filtered = obatData.filter(obat => {
+        const matchKeyword = obat.nama.toLowerCase().includes(keyword.toLowerCase());
+
+        const matchStok = selectedStok.toLowerCase() === "semua" ||
+          getStatusText(obat.stok).toLowerCase() === selectedStok.toLowerCase();
+
+        const matchGolongan = selectedGolongan.toLowerCase() === "semua" ||
+          obat.golongan.toLowerCase() === selectedGolongan.toLowerCase();
+
+        return matchKeyword && matchStok && matchGolongan;
+      });;
+
+      if (filtered.length === 0) {
+        container.innerHTML = "<p class='text-muted'>Tidak ada obat yang cocok.</p>";
+      } else {
+        filtered.forEach(obat => {
+          container.innerHTML += renderObatCard(obat);
+        });
+      }
+    }
+
+    applyFilters();
+
+
+
+
     // Render obat list when DOM is ready
-    document.addEventListener('DOMContentLoaded', renderObatList);
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFilters();
+
+      let kodeObatTerpilih = null;
+
+
+      // Search Input
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          keyword = e.target.value;
+          applyFilters();
+        });
+      }
+
+      // Filter Stok
+      // Tambahkan event listener untuk stok filter
+      document.querySelectorAll('.stok-option').forEach(item => {
+        item.addEventListener('click', function (e) {
+          e.preventDefault(); // mencegah reload
+          selectedStok = this.dataset.value; // simpan nilai stok
+          applyFilters(); // terapkan filter
+        });
+      });
+
+
+
+      // Filter Golongan
+      document.querySelectorAll('.golongan-option').forEach(btn => {
+        btn.addEventListener('click', function () {
+          selectedGolongan = this.dataset.value.toLowerCase();
+
+          applyFilters();
+        });
+      });
+
+      // Tombol 'Semua'
+      document.getElementById('filterSemua').addEventListener('click', function () {
+        selectedStok = "Semua";
+        selectedGolongan = "Semua";
+        keyword = "";
+        document.getElementById('searchInput').value = "";
+        applyFilters();
+      });
+      // Delegasi event click ke tombol delete
+      document.body.addEventListener('click', function (e) {
+        if (e.target.closest('.btn-delete')) {
+          const btn = e.target.closest('.btn-delete');
+          kodeObatTerpilih = btn.getAttribute('data-kode');
+          const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+          modal.show();
+        }
+      });
+
+      document.getElementById('btnConfirmDelete').addEventListener('click', function () {
+        if (kodeObatTerpilih) {
+          // Hapus data dari array
+          const index = obatData.findIndex(obat => obat.kode === kodeObatTerpilih);
+          if (index !== -1) {
+            obatData.splice(index, 1);
+            renderObatList();
+          }
+          bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')).hide();
+        }
+      });
+
+      const container = document.getElementById("obatContainer");
+      container.innerHTML = obatData.map(renderObatCard).join("");
+      setupEditButtons();
+
+    });
+
+
+
+
   </script>
 
   <!-- Bootstrap JS (penting untuk modal) -->

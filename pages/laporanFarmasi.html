@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Farmasi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'montserrat', sans-serif;
+    }
+    .card {
+      border-radius: 10px;
+    }
+    .btn-primary {
+      background-color: #1e40af;
+      border: none;
+    }
+    .btn-outline-primary {
+      border-color: #1e40af;
+      color: #1e40af;
+    }
+    .btn-outline-primary:hover {
+      background-color: #1e40af;
+      color: white;
+    }
+    .text-custom-primary {
+  color: #2E5ADD;
+}
+    .section-tampilkan-laporan {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.label-tampilkan {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+
+.pilihan-laporan {
+  display: flex;
+  gap: 100px; /* Jarak antar opsi, bisa sesuaikan */
+  opacity: 0.6; /* Transparan seperti pada gambar */
+  padding-left: 2.5rem; 
+  margin-top: 20px;
+}
+
+.opsi {
+  color: #6c6c6c;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.opsi:hover {
+  color: #000;
+}
+
+.form-label{
+  margin-top: 15px;
+  font-weight: bold;
+
+}
+.date-custom {
+  width: 280px; /* sesuaikan untuk lebih kecil */
+  height: 30px;
+margin-right: 10px;
+}
+.date-wrapper {
+  display: flex;
+  gap: 2; /* hilangkan jarak antar input */
+}
+
+.pilih-laporan-wrapper {
+  margin-top: 15px; /* jarak dari kolom sebelumnya */
+}
+
+.pilih-laporan-wrapper .form-check {
+  margin-bottom: 0.5cm; /* jarak antar checkbox */
+}
+
+.btn-fixed-width {
+  width: 25cm; /* bisa kamu sesuaikan antara 10–12 cm */
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.mt-custom {
+  margin-top: 40px; /* atau ganti ke 1cm jika ingin lebih besar */
+}
+.mp-custom {
+  margin-top: 15px; /* atau ganti ke 1cm jika ingin lebih besar */
+}
+
+  </style>
+</head>
+<body>
+<div id="header"></div>
+<div class="container py-5">
+  <h4 class="fw-bold mb-4 text-custom-primary">Laporan Farmasi</h4>
+
+  <!-- Filter -->
+  <div class="card p-4 mb-4 shadow-sm">
+    <div class="section-tampilkan-laporan">
+  <label class="label-tampilkan">Tampilkan laporan untuk</label>
+  <div class="pilihan-laporan">
+    <span class="opsi">7 Hari</span>
+    <span class="opsi">30 Hari</span>
+    <span class="opsi">90 Hari</span>
+    <span class="opsi">Custom</span>
+  </div>
+</div>
+
+
+    <div class="mb-3">
+  <label for="startDate" class="form-label">Pilih rentang tanggal</label>
+  <div class="row">
+  <div class="date-wrapper">
+  <input type="date" class="form-control date-custom" id="startDate" placeholder="Dari Tanggal">
+  <input type="date" class="form-control date-custom" id="endDate" placeholder="Sampai Tanggal">
+</div>
+</div>
+</div>
+
+<div class="mb-3 pilih-laporan-wrapper">
+  <label class="form-label">Pilih laporan</label>
+  <div class="form-check">
+    <input class="form-check-input report-type" type="checkbox" id="checkAll" value="all">
+    <label class="form-check-label" for="checkAll">Semua</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input report-type" type="checkbox" id="checkObat" value="obat">
+    <label class="form-check-label" for="checkObat">Obat</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input report-type" type="checkbox" id="checkTransaksi" value="transaksi">
+    <label class="form-check-label" for="checkTransaksi">Transaksi</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input report-type" type="checkbox" id="checkPendapatan" value="pendapatan">
+    <label class="form-check-label" for="checkPendapatan">Pendapatan</label>
+  </div>
+</div>
+</div>
+
+<div class="mt-3 text-center">
+  <button class="btn btn-primary btn-fixed-width mb-2 mt-custom" id="btnTampilkan">Tampilkan Laporan</button>
+  <button class="btn btn-outline-primary btn-fixed-width mp-custom" id="btnReset">Reset</button>
+</div>
+
+
+  <!-- Hasil Laporan -->
+  <div id="laporanHasil" style="display: none;">
+    <p class="text-end fw-semibold" id="tanggalRange"></p>
+
+    <!-- OBAT -->
+    <div id="sectionObat" class="mb-4">
+      <h6><i class="fas fa-pills text-primary me-2"></i> Obat</h6>
+      <div class="table-responsive">
+        <table class="table table-bordered rounded shadow-sm">
+          <thead class="table-light">
+            <tr>
+              <th>Nama Obat</th>
+              <th>Terjual</th>
+              <th>Stok Masuk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Paracetamol</td><td>50</td><td>30</td></tr>
+            <tr><td>Amoxicillin</td><td>20</td><td>0</td></tr>
+            <tr><td>Diazepam</td><td>10</td><td>0</td></tr>
+            <tr><td>Albendazol</td><td>15</td><td>30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TRANSAKSI -->
+    <div id="sectionTransaksi" class="mb-4">
+      <h6><i class="fas fa-hand-holding-usd text-primary me-2"></i> Transaksi</h6>
+      <div class="row text-center">
+        <div class="col-md-4 mb-2">
+          <div class="border rounded p-3">
+            <div>Non Resep</div>
+            <h4 class="fw-bold text-primary">77</h4>
+          </div>
+        </div>
+        <div class="col-md-4 mb-2">
+          <div class="border rounded p-3">
+            <div>Resep</div>
+            <h4 class="fw-bold text-primary">150</h4>
+          </div>
+        </div>
+        <div class="col-md-4 mb-2">
+          <div class="border rounded p-3">
+            <div>Total Transaksi</div>
+            <h4 class="fw-bold text-primary">227</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENDAPATAN -->
+    <div id="sectionPendapatan" class="mb-4">
+      <h6><i class="fas fa-coins text-primary me-2"></i> Pendapatan</h6>
+      <div class="bg-light p-3 rounded mb-3">
+        <div class="fw-semibold">Total Pendapatan</div>
+        <h4 class="text-primary fw-bold">Rp. 3.500.000</h4>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="border p-3 rounded">
+            <p class="mb-1">Non Resep: <span class="fw-semibold">Rp. 1.200.000</span></p>
+            <p class="mb-1">Resep: <span class="fw-semibold">Rp. 1.300.000</span></p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-3 rounded">
+            <p class="mb-1">Tunai: <span class="fw-semibold">Rp. 2.900.000</span></p>
+            <p class="mb-1">Non Tunai: <span class="fw-semibold">Rp. 600.000</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer"></div>
+<script src="../js/layout.js"></script>
+<!-- JS INTERAKSI -->
+<script>
+  const btn = document.getElementById("btnTampilkan");
+  const resetBtn = document.getElementById("btnReset");
+
+  btn.addEventListener("click", () => {
+    const checkAll = document.getElementById("checkAll").checked;
+    const checkObat = document.getElementById("checkObat").checked;
+    const checkTransaksi = document.getElementById("checkTransaksi").checked;
+    const checkPendapatan = document.getElementById("checkPendapatan").checked;
+
+    const start = document.getElementById("startDate").value;
+    const end = document.getElementById("endDate").value;
+    const rangeText = start && end ? `${start} - ${end}` : '';
+
+    document.getElementById("laporanHasil").style.display = "block";
+    document.getElementById("tanggalRange").textContent = rangeText;
+
+    document.getElementById("sectionObat").style.display = (checkAll || checkObat) ? "block" : "none";
+    document.getElementById("sectionTransaksi").style.display = (checkAll || checkTransaksi) ? "block" : "none";
+    document.getElementById("sectionPendapatan").style.display = (checkAll || checkPendapatan) ? "block" : "none";
+  });
+
+  document.getElementById("checkAll").addEventListener("change", function () {
+    if (this.checked) {
+      document.querySelectorAll(".report-type:not(#checkAll)").forEach(el => el.checked = false);
+    }
+  });
+
+  document.querySelectorAll(".report-type:not(#checkAll)").forEach(el => {
+    el.addEventListener("change", () => {
+      document.getElementById("checkAll").checked = false;
+    });
+  });
+
+  resetBtn.addEventListener("click", () => {
+    document.getElementById("startDate").value = '';
+    document.getElementById("endDate").value = '';
+    document.querySelectorAll(".report-type").forEach(el => el.checked = false);
+    document.getElementById("laporanHasil").style.display = "none";
+  });
+</script>
+
+</body>
+</html>

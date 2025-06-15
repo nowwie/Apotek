@@ -68,25 +68,117 @@
     <!-- Metode Pembayaran -->
     <div class="mb-4 text-center">
       <div class="payment-method-box">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="metode" id="tunai" checked />
-        <label class="form-check-label" for="tunai">Tunai</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="metode" id="tunai" checked />
+          <label class="form-check-label" for="tunai">Tunai</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="metode" id="nonTunai" />
+          <label class="form-check-label" for="nonTunai">Non - Tunai</label>
+        </div>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="metode" id="nonTunai" />
-        <label class="form-check-label" for="nonTunai">Non - Tunai</label>
-      </div>
-    </div>
     </div>
 
     <!-- Tombol Cetak -->
     <div class="text-center">
-      <button class="btn btn-primary">Cetak Struk</button>
+      <button class="btn btn-primary" onclick="tampilkanStruk()">Cetak Struk</button>
+    </div>
+  </div>
+
+  <!-- Modal Struk -->
+  <div class="modal fade" id="strukModal" tabindex="-1" aria-labelledby="strukModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="strukModalLabel">Struk Pembayaran</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="receipt" id="strukContent">
+            <div class="receipt-header">
+              <div class="receipt-title">APOTEK SEHAT</div>
+              <div class="receipt-subtitle">Jl. Kesehatan No. 123, Malang</div>
+              <div class="receipt-subtitle">Telp: (0341) 123456</div>
+            </div>
+            
+            <div class="receipt-info">
+              <div>No. Transaksi: <span id="strukNoTransaksi"></span></div>
+              <div>Tanggal: <span id="strukTanggal"></span></div>
+              <div>Waktu: <span id="strukWaktu"></span></div>
+              <div>Kasir: Admin</div>
+              <div>Pasien: Pak Pawat (312)</div>
+            </div>
+            
+            <div class="receipt-items">
+              <div class="receipt-item">
+                <div>CTM 4 mg</div>
+                <div>Rp 12.000</div>
+              </div>
+              <div style="font-size: 10px; color: #666; margin-left: 10px; margin-bottom: 8px;">
+                1 tablet, 2x sehari
+              </div>
+              
+              <div class="receipt-item">
+                <div>Alprazolam 0.5 mg</div>
+                <div>Rp 40.000</div>
+              </div>
+              <div style="font-size: 10px; color: #666; margin-left: 10px; margin-bottom: 8px;">
+                1 tablet, 1x sehari
+              </div>
+            </div>
+            
+            <div>
+              <div class="receipt-item">
+                <div>Subtotal</div>
+                <div>Rp 52.000</div>
+              </div>
+              <div class="receipt-item">
+                <div>Biaya Pelayanan</div>
+                <div>Rp 1.000</div>
+              </div>
+              <div class="receipt-item receipt-total">
+                <div>TOTAL</div>
+                <div>Rp 53.000</div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+              <div class="receipt-item">
+                <div>Pembayaran:</div>
+                <div id="strukMetodePembayaran"></div>
+              </div>
+              <div class="receipt-item">
+                <div>Dibayar</div>
+                <div>Rp 53.000</div>
+              </div>
+              <div class="receipt-item">
+                <div>Kembalian</div>
+                <div>Rp 0</div>
+              </div>
+            </div>
+            
+            <div class="receipt-footer">
+              <div>Terima kasih atas kepercayaan Anda</div>
+              <div>Semoga lekas sembuh</div>
+              <div style="margin-top: 10px;">
+                ** STRUK INI ADALAH BUKTI PEMBAYARAN **
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary" onclick="cetakStruk()">
+            <i class="bi bi-printer"></i> Cetak
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div id="footer"></div>
   <script src="../js/layout.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Tampilkan tanggal otomatis (tanpa jam)
     const today = new Date();
@@ -96,6 +188,38 @@
     ];
     const tanggalStr = `${today.getDate()} ${bulan[today.getMonth()]} ${today.getFullYear()}`;
     document.getElementById("tanggalCheckout").innerText = tanggalStr;
+
+    // Generate nomor transaksi acak
+    function generateNoTransaksi() {
+      const timestamp = Date.now().toString().slice(-6);
+      const random = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+      return `TRX${timestamp}${random}`;
+    }
+
+    // Fungsi untuk menampilkan struk
+    function tampilkanStruk() {
+      // Update informasi di struk
+      const now = new Date();
+      const tanggal = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
+      const waktu = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+      
+      document.getElementById('strukNoTransaksi').textContent = generateNoTransaksi();
+      document.getElementById('strukTanggal').textContent = tanggal;
+      document.getElementById('strukWaktu').textContent = waktu;
+      
+      // Update metode pembayaran
+      const metodePembayaran = document.querySelector('input[name="metode"]:checked').id === 'tunai' ? 'Tunai' : 'Non-Tunai';
+      document.getElementById('strukMetodePembayaran').textContent = metodePembayaran;
+      
+      // Tampilkan modal
+      const strukModal = new bootstrap.Modal(document.getElementById('strukModal'));
+      strukModal.show();
+    }
+
+    // Fungsi untuk mencetak struk
+    function cetakStruk() {
+      window.print();
+    }
   </script>
 </body>
 </html>

@@ -8,29 +8,35 @@
    width: 100%;
  }
 
- .stok-box {
-   flex: 1;
-   padding: 1rem;
-   border-radius: 10px;
-   color: white;
-   font-weight: 600;
-   cursor: pointer;
-   text-align: center;
- }
+  .stok-box {
+    width: 296px;
+    padding: 1rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
 
  .stok-rendah-box {
    background-color: #ffedb5;
-   color: #b07b00;
-   border: 1px solid #ffc107;
+   color: #DC990A;
+   border: 1px solid #DC990A;
  }
 
  .stok-habis-box {
    background-color: #f8bcbc;
-   color: #9c0000;
-   border: 1px solid #dc3545;
+   color: #C40101;
+   border: 1px solid #C40101;
  }
 
  .obat-card {
+   font-size: 14px;
    border: 1px solid #ddd;
    border-radius: 12px;
    background-color: #fff;
@@ -47,32 +53,85 @@
  }
 
  .status-aman {
-   background-color: #c9f7f5;
-   color: #0bb7af;
+   border: 1px solid #357A5B;
+   background-color: #D2E7DD;
+   color: #357A5B;
  }
 
+  .status-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .status-count {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .status-icon-rendah {
+    font-size: 1.8rem;
+    color: #DC990A;
+  }
+
+  .status-icon-habis {
+    font-size: 1.8rem;
+    color: #C40101;
+  }
  .status-rendah {
+   border: 1px solid #DC990A;
    background-color: #fff4de;
-   color: #ffc700;
+   color: #DC990A;
  }
 
  .status-habis {
+   border: 1px solid #C40101;
    background-color: #ffe2e5;
-   color: #f1416c;
+   color: #C40101;
  }
 
- .icon-btn {
-   background: none;
-   border: none;
-   cursor: pointer;
-   margin-left: 0.25rem;
-   color: #6c757d;
- }
+  .icon-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 8px;
+  }
 
- .icon-btn:hover {
-   color: #000;
- }
+  .btn-edit {
+    background-color: #C6D2F6; /* Biru */
+    color: #1B3CA2;
+     border: 1px solid #1B3CA2;
+  }
+
+  .btn-delete {
+    background-color: #F7B6B6; /* Merah */
+    color: #C40101;
+    border: 1px solid #C40101;
+  }
+
+  .icon-btn:hover {
+    opacity: 0.85;
+    transition: 0.2s;
+  }
+
 
  .pagination {
    justify-content: center;
  }
+
+ .btn-sm {
+  border-radius: 8px;
+  font-size: 0.875rem;
+  padding: 4px 12px;
+}
+
+.dropdown-toggle::after {
+  margin-left: 6px;
+}
+
+

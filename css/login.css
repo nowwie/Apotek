@@ -1,8 +1,8 @@
 * {
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
@@ -186,8 +186,8 @@ body {
     .right-section {
         width: 100%;
         height: auto;
-        padding: 20px;
-        align-items: center;
+        
+        
     }
 
     .left-section.logo {

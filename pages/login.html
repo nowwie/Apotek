@@ -25,7 +25,7 @@
         <div class="right-section">
             <div class="login-box">
                 <h2>Log In</h2>
-                <form action="#dashboard.html" method="post">
+                <form id="loginForm">
                     <div class="form-group input-with-icon">
                         <label for="nip">NIP (Nomor Induk Pegawai)</label>
                         <div class="input-icon-container">
@@ -68,6 +68,19 @@
                 eyeIcon.alt = "Show Password";
             }
         }
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const nip = document.getElementById('nip').value;
+            const password = document.getElementById('password').value;
+            
+            if (nip && password) {
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Mohon lengkapi NIP dan Password!');
+            }
+        });
+        
     </script>
 </body>
 
